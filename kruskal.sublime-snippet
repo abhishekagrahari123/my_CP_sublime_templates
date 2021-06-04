@@ -1,0 +1,80 @@
+<snippet>
+  <content><![CDATA[
+class union_find ////1-based indexing
+{
+    int *par;
+    int *siz;
+    int n;
+    int num_of_components;
+
+public :
+    union_find(int nv) {
+        n = nv;
+        par = new int[n + 1];
+        siz = new int[n + 1];
+        num_of_components = n;
+        for (int i = 1; i <= n; i++)
+            par[i] = i, siz[i] = 1;
+    }
+
+    int get_root(int i) {
+        if (par[i] == i)
+            return i;
+        return par[i] = get_root(par[i]); //path compression
+    }
+
+    int take_union(int i, int j) {
+        int u = get_root(i);
+        int v = get_root(j);
+        if (u == v)
+            return num_of_components;
+        if (siz[u] < siz[v])
+            swap(u, v);
+        par[v] = u; //u should have larger size
+        siz[u] += siz[v];
+        num_of_components--;
+        return num_of_components;
+    }
+
+    bool find(int i, int j) {
+        return get_root(i) == get_root(j);
+    }
+};
+
+set<pair<ll, pair<ll, ll>>> edges;
+void kruskal() {
+    edges.insert({9, {5, 4}});
+    edges.insert({9, {4, 5}});
+    edges.insert({4, {5, 1}});
+    edges.insert({4, {1, 5}});
+    edges.insert({1, {4, 1}});
+    edges.insert({1, {1, 4}});
+    edges.insert({2, {1, 2}});
+    edges.insert({2, {2, 1}});
+    edges.insert({3, {4, 2}});
+    edges.insert({3, {2, 4}});
+    edges.insert({5, {4, 3}});
+    edges.insert({5, {3, 4}});
+    edges.insert({3, {3, 2}});
+    edges.insert({3, {2, 3}});
+    edges.insert({8, {3, 6}});
+    edges.insert({8, {6, 3}});
+    edges.insert({7, {6, 2}});
+    edges.insert({7, {2, 6}});
+    union_find t(6);
+    ll ans = 0;
+    for (auto &e : edges) {
+        //both the end points are from different sets then take union of them
+        if (!t.find(e.S.F, e.S.S)) {
+            t.take_union(e.S.F, e.S.S);
+            ans += e.F;
+        }
+    }
+    cout<<ans<<nl;
+}
+]]></content>
+  <tabTrigger>kruskal</tabTrigger>
+  <description>Template</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>

@@ -1,0 +1,7 @@
+{
+	"scope": "source.c++",
+	"completions":
+	[
+		{"trigger": "vvl", "contents": "vector<vector<ll>> $0(,vector<ll> ());"}
+	]
+}

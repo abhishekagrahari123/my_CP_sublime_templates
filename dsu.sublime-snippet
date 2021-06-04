@@ -1,0 +1,48 @@
+<snippet>
+  <content><![CDATA[
+class union_find //1-based indexing
+{
+    int *par;
+    int *siz;
+    int n;
+    int num_of_components;
+
+public :
+    union_find(int nv) {
+        n = nv;
+        par = new int[n + 1];
+        siz = new int[n + 1];
+        num_of_components = n;
+        for (int i = 1; i <= n; i++)
+            par[i] = i, siz[i] = 1;
+    }
+
+    int get_root(int i) {
+        if (par[i] == i)
+            return i;
+        return par[i] = get_root(par[i]); //path compression
+    }
+
+    int take_union(int i, int j) {
+        int u = get_root(i);
+        int v = get_root(j);
+        if (u == v)
+            return num_of_components;
+        if (siz[u] < siz[v])
+            swap(u, v);
+        par[v] = u; //u should have larger size
+        siz[u] += siz[v];
+        num_of_components--;
+        return num_of_components;
+    }
+
+    bool find(int i, int j) {
+        return get_root(i) == get_root(j);
+    }
+};
+]]></content>
+  <tabTrigger>dsu</tabTrigger>
+  <description>Template</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>

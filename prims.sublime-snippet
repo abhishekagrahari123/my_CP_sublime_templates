@@ -1,0 +1,29 @@
+<snippet>
+  <content><![CDATA[
+set<pair<ll, ll>> s;
+vector<pair<ll,ll>> g[10]; //insert example g[i].pb({weight, j});
+vector<bool> vis(10);
+ll prim() {
+    s.insert({0, 0});
+    ll ans = 0;
+    while (!s.empty()) {
+        auto it = s.begin();
+        s.erase(it);
+        if (!vis[it->second]) {
+            vis[it->second] = true;
+            ans += it->first;
+            for (auto &t : g[it->second]) {
+                if (!vis[t.S]) {
+                    s.insert({t.F, t.S});
+                }
+            }
+        }
+    }
+    return ans;
+}
+]]></content>
+  <tabTrigger>prims</tabTrigger>
+  <description>Template</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>

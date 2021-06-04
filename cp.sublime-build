@@ -1,0 +1,14 @@
+{ 
+    "cmd": ["g++", "-DEPSILON", "-Wall", "$file", "-o", "$file_base_name"], 
+    "selector": "source.c++", 
+    "working_dir": "$file_path", 
+
+    "variants": 
+    [ 
+        { 
+            "name": "Run", 
+            "cmd": ["g++", "-DEPSILON", "-Wall", "$file", "-o", "$file_base_name", "&&", "$file_path/$file_base_name"], 
+            "shell": true 
+        }
+    ]
+}

@@ -1,0 +1,39 @@
+<snippet>
+  <content><![CDATA[
+int par[100005][20];
+void pre_computation() {
+	//assuming par[node][0] is processed
+	for (int i = 0; i < 20; i++) {
+		for (int j = 1; j <= n; j++) {
+			par[j][i] = par[par[j][i - 1]][i - 1];
+		}
+	}
+}
+
+int kth_parent(int node, int k) {
+	for (int i = 10; i >= 0; i--) {
+		if (k & (1 << i)) {
+			node = par[node][i];
+		}
+	}
+	return node;
+}
+
+int lca(int u, int v) {
+	if (height[u] > height(v)) swap(u, v);
+	v = kth_parent(v, height[v] - height[u]);
+	if (u == v) return u;
+	for (int i = 17; i >= 0; i--) {
+		if (par[i][u] != par[i][v]) {
+			u = par[i][u];
+			v = par[i][v];
+		}
+	}
+	return par[0][u];
+}
+]]></content>
+  <tabTrigger>lca</tabTrigger>
+  <description>LowestCommonAncestor</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>
