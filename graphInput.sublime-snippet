@@ -1,0 +1,17 @@
+<snippet>
+  <content><![CDATA[
+vector<int> g[100005];
+vector<bool> vis(100005,false);
+int n,m;
+cin>>n>>m;
+for(int i = 1; i <= m; i++){
+    int x,y; cin>>x>>y;
+    g[x].push_back(y);
+    g[y].push_back(x);
+}
+]]></content>
+  <tabTrigger>gi</tabTrigger>
+  <description>Graph Input</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>

@@ -1,0 +1,21 @@
+<snippet>
+  <content><![CDATA[
+vector<int> flattened_tree;
+int start_position[100005], end_position[100005];
+void dfs(int node, int par) {
+	flattened_tree.push_back(node);
+	start_position[node] = flattened_tree.size();
+	for (auto i : graph[node]) {
+		if (i != par) {
+			dfs(i, node);
+		}
+	}
+	end_position[node] = flattened_tree.size();
+}
+
+]]></content>
+  <tabTrigger>flat</tabTrigger>
+  <description>treeFlattening</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>

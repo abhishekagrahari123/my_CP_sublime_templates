@@ -18,8 +18,9 @@ typedef long double lld;
 #define S second
 #define v1 vector<ll>
 #define int ll
-#define v2(arr2d,rows,columns) vector<vector<ll>> arr2d(rows,vector<ll>(columns))
 #define loop(i,a,b)     for(int i=(a);i<=(b);i++)
+#define loopr(i,a,b)     for(int i=(a);i>=(b);i--)
+#define setbits(x) __builtin_popcountll(x)
 #define nline cout << "\n"
 #define sp " "
 #ifdef Abhishek
@@ -39,7 +40,7 @@ typedef long double lld;
 #define deb4(a, b, c, d);
 #define deba2(dp,n,m)
 #endif
-#define inf 1000000000000000000
+#define inf 1000000000000000000 //1e18
 const double delta = 0.0000000001;
 const double pi = 3.1415926535;
 ll MOD = 1000000007;
@@ -48,6 +49,9 @@ ll MOD = 1000000007;
 // power of two exactly when x & (x − 1) = 0.
 // 2)x & -x:sets all the one bits to zero, except last one bit
 // 3)x | (x - 1):inverts all the bits after the last one bit
+//clear adj and visited vector declared globally after each test case
+//Mod wale question mein last mein if dalo ie. ans<0 then ans+=mod;
+//Incase of close mle change language to c++17 or c++14  
 void _print(int t) {cerr << t;}
 void _print(string t) {cerr << t;}
 void _print(char t) {cerr << t;}
@@ -68,13 +72,14 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 ll expo(ll a, ll b, ll mod) {ll res = 1; while (b > 0) {if (b & 1)res = (res * a) % mod; a = (a * a) % mod; b = b >> 1;} return res;}
 ll gcd(ll a, ll b) { if (b == 0) return a; return gcd(b, a % b);}
 ll lcm(ll a, ll b) { ll x = gcd(a, b); ll ans = (a * b) / x; return ans; }
+int extendedGCD(int a, int b, int &x, int &y) {if (b == 0) {x = 1; y = 0; return a;} int x1, y1; int d = extendedGCD(b, a % b, x1, y1); x = y1; y = x1 - (a / b) * y1; return d;}
 void swap(ll &x, ll &y) {ll temp = x; x = y; y = temp;}
 ll modInverse(ll n, ll t) { return expo(n, t - 2, t);}
 void factors(ll n) {v1 factor; for (ll i = 1; i * i <= n; i++) if (n % i == 0) { if (n / i == i) factor.pb(i); else {factor.pb(i); factor.pb(n / i);}}}
 ll mod_add(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a + b) % m) + m) % m;}
 ll mod_mul(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a * b) % m) + m) % m;}
 ll mod_sub(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a - b) % m) + m) % m;}
-ull nCrModPFermat(ull n, ull r) {if (n < r) return 0; if (r == 0) return 1; vector<ull> fac(n + 1); fac[0] = 1; for (ll i = 1; i <= n; i++) fac[i] = (fac[i - 1] * i) % MOD; return (fac[n] * modInverse(fac[r], MOD) % MOD * modInverse(fac[n - r], MOD) % MOD) % MOD;}
+ull nCrModPFermat(ll n, ll r) {if (n < r) return 0; if (r == 0) return 1; vector<ull> fac(n + 1); fac[0] = 1; for (ll i = 1; i <= n; i++) fac[i] = (fac[i - 1] * i) % MOD; return (fac[n] * modInverse(fac[r], MOD) % MOD * modInverse(fac[n - r], MOD) % MOD) % MOD;}
 //**********************************************************CODE STARTS **************************************************************
 
 void solve()
@@ -88,7 +93,11 @@ signed main() {
     freopen("Error.txt", "w", stderr);
 #endif
     fastio();
-    solve();
+    int t = 1;
+    // cin >> t;
+    while (t--) {
+        solve();
+    }
     return 0;
 }
 

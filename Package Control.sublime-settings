@@ -5,8 +5,10 @@
 	],
 	"installed_packages":
 	[
+		"CppFastOlympicCoding",
 		"Emmet",
 		"Formatter",
+		"HTMLBeautify",
 		"Materialize",
 		"Package Control",
 		"SublimeAStyleFormatter",

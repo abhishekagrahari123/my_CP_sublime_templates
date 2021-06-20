@@ -1,22 +1,28 @@
 <snippet>
   <content><![CDATA[
-int par[100005][20];
-void pre_computation() {
-	//assuming par[node][0] is processed
-	for (int i = 0; i < 20; i++) {
-		for (int j = 1; j <= n; j++) {
-			par[j][i] = par[par[j][i - 1]][i - 1];
+vector<int> g[200005];
+int par[200005][20];  //if kth parent don't exist it returns -1
+void preprocess(int n) {  //nodes are 1,2,... and 1 is the root node
+	loop(j, 1, 18) {
+		loop(i, 1, n) {
+			int mid = par[i][j - 1];
+			if (mid != -1) {
+				par[i][j] = par[mid][j - 1];
+			}
+			else par[i][j] = -1;
 		}
 	}
 }
 
-int kth_parent(int node, int k) {
-	for (int i = 10; i >= 0; i--) {
-		if (k & (1 << i)) {
-			node = par[node][i];
+int kparent(int x, int k) {
+	int ans = x;
+	for (int i = 18; i >= 0; i--) {
+		if (k & 1 << i) {
+			ans = par[ans][i];
+			if (ans == -1) break;
 		}
 	}
-	return node;
+	return ans;
 }
 
 ]]></content>

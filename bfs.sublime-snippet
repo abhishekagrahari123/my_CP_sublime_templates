@@ -1,0 +1,21 @@
+<snippet>
+  <content><![CDATA[
+queue<int> q;
+q.push(1);
+vis[1] = true;
+while (!q.empty()) {
+    int x = q.front();
+    q.pop();
+    for (auto &t : g[x]) {
+        if (!vis[t]) {
+            q.push(t);
+            vis[t] = true;
+        }
+    }
+} 
+]]></content>
+  <tabTrigger>bfs</tabTrigger>
+  <description>BFS</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>
