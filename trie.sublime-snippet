@@ -1,0 +1,57 @@
+<snippet>
+  <content><![CDATA[
+struct node
+{
+    map<char, int> m;
+    bool terminate = false;
+};
+
+struct Trie
+{
+    node a[100005];
+    int ptr = 2;
+
+    void insert(string s) {
+        int curr = 1;
+        for (auto &c : s) {
+            if (a[curr].m.count(c)) {
+                curr = a[curr].m[c];
+            }
+            else {
+                a[curr].m[c] = ptr;
+                ptr++;
+                curr = a[curr].m[c];
+            }
+        }
+        a[curr].terminate = true;
+    }
+
+    bool search(string s) {
+        int curr = 1;
+        for (auto &c : s) {
+            if (!a[curr].m.count(c)) {
+                return false;
+            }
+            curr = a[curr].m[c];
+        }
+        return a[curr].terminate;
+    }
+
+    bool startsWith(string s) {
+        int curr = 1;
+        for (auto &c : s) {
+            if (!a[curr].m.count(c)) {
+                return false;
+            }
+            curr = a[curr].m[c];
+        }
+        return true;
+    }
+};
+
+]]></content>
+  <tabTrigger>kruskal</tabTrigger>
+  <description>Template</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>

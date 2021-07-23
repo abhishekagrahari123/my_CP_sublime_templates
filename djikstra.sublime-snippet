@@ -1,0 +1,48 @@
+<snippet>
+  <content><![CDATA[
+
+vector<pii> g[100005];
+vector<bool> vis(100005, false);
+void solve()
+{
+    int n, m;
+    cin >> n >> m;
+    //in priority queue pair is <weight, vertex>
+    //while in adj list pair is <vertex, weight>
+    //directed graph
+    for (int i = 1; i <= m; i++) {
+        int x, y, w;
+        cin >> x >> y >> w;
+        g[x].push_back({y, w});
+    }
+
+    vector<int> d(n + 1, inf);
+    vector<int> p(n + 1, -1);
+
+    d[1] = 0;   
+    priority_queue<pii, vector<pii>, greater<pii>> q;
+    q.push({0, 1});
+    while (!q.empty()) {
+        int v = q.top().S;
+        int d_v = q.top().F;
+        q.pop();
+        if (d_v != d[v]) continue;
+        for (auto edge : g[v]) {
+            int to = edge.F;
+            int len = edge.S;
+
+            if (d[v] + len < d[to]) {
+                d[to] = d[v] + len;
+                p[to] = v;
+                q.push({d[to], to});
+            }
+        }
+    }
+}
+
+]]></content>
+  <tabTrigger>dijkstra</tabTrigger>
+  <description>Dijkstra</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>

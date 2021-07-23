@@ -1,0 +1,65 @@
+<snippet>
+  <content><![CDATA[
+#include "bits/stdc++.h"
+using namespace std;
+
+const int N = 1e5 + 5;
+
+int t[4 * N];
+bool lazy[4 * N];
+int upd[4 * N];
+void apply(int v, int tl, int tr, int val) {
+    t[v] += val * (tr - tl + 1);
+    if (tl != tr) {
+        lazy[v] = 1;
+        upd[v] += val;
+    }
+}
+void pushdown(int v, int tl, int tr) {
+    if (lazy[v]) {
+        lazy[v] = 0;
+        int tm = (tl + tr) / 2;
+        apply(2 * v, tl, tm, upd[v]);
+        apply(2 * v + 1, tm + 1, tr, upd[v]);
+        upd[v] = 0;
+    }
+}
+void update(int v, int tl, int tr, int l, int r, int val) {
+    if (tl > r || tr < l) {
+        return;
+    }
+    if (l <= tl && tr <= r) {
+        apply(v, tl, tr, val);
+        return;
+    }
+    pushdown(v, tl, tr);
+    int tm = (tl + tr) / 2;
+    update(2 * v, tl, tm, l, r, val);
+    update(2 * v + 1, tm + 1, tr, l, r, val);
+    t[v] = t[2 * v] + t[2 * v + 1];
+}
+int query(int v, int tl, int tr, int l, int r) {
+    if (tl > r || tr < l) {
+        return 0;
+    }
+    if (l <= tl && tr <= r) {
+        return t[v];
+    }
+    pushdown(v, tl, tr);
+    int tm = (tl + tr) / 2;
+    int ans = 0;
+    ans += query(2 * v, tl, tm, l, r);
+    ans += query(2 * v + 1, tm + 1, tr, l, r);
+    return ans;
+}
+
+int main() {
+    update(1, 0, N - 1, 2, 5, 4);
+    cout << query(1, 0, N - 1, 1, 3);
+}
+]]></content>
+  <tabTrigger>lazy</tabTrigger>
+  <description>Lazy Propagation</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>

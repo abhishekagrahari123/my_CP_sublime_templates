@@ -23,7 +23,7 @@ ll prim() {
 }
 ]]></content>
   <tabTrigger>prims</tabTrigger>
-  <description>Template</description>
+  <description>Prim's Algorithm</description>
   <!-- Optional: Set a scope to limit where the snippet will trigger -->
   <scope >source.c++</scope >
 </snippet>

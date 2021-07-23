@@ -2,12 +2,12 @@
   <content><![CDATA[
 class union_find //1-based indexing
 {
+public :
     int *par;
     int *siz;
     int n;
     int num_of_components;
 
-public :
     union_find(int nv) {
         n = nv;
         par = new int[n + 1];

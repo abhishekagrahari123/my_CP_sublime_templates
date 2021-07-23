@@ -3,8 +3,6 @@
 	"completions":
 	[
 		{"trigger": "vvi", "contents": "vector<vector<int>> $0(,vector<int> ());"},
-		{"trigger": "vi", "contents": "vector<int> $0"},
-		{"trigger": "pii", "contents": "pair<int,int> $0"},
 		{"trigger": "si", "contents": "set<int> $0"},
 		{"trigger": "mii", "contents": "map<int,int> $0"},
 		{"trigger": "mivi", "contents": "map<int,vector<int>> $0"},
