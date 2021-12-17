@@ -41,8 +41,8 @@ void solve()
 }
 
 ]]></content>
-  <tabTrigger>dijkstra</tabTrigger>
-  <description>Dijkstra</description>
+  <tabTrigger>dijkstra1</tabTrigger>
+  <description>with priority queue</description>
   <!-- Optional: Set a scope to limit where the snippet will trigger -->
   <scope >source.c++</scope >
 </snippet>

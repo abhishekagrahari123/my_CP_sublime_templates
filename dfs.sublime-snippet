@@ -4,9 +4,9 @@ vector<ll> g[10];
 vector<bool> vis(10,false);
 void dfs(ll s) {
 	vis[s] = true;
-	for (auto &p : g[s]) {
-		if (!vis[p]) {
-			dfs(p);
+	for (auto &ch : g[s]) {
+		if (!vis[ch]) {
+			dfs(ch);
 		}
 	}
 }

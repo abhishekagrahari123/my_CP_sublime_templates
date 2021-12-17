@@ -1,0 +1,278 @@
+<snippet>
+  <content><![CDATA[
+/* Abhishek Agrahari */
+#include <bits/stdc++.h>
+#include <array>
+using namespace std;
+#define pb push_back
+#define nl "\n"
+#define all(x) x.begin(), x.end()
+#define mp make_pair
+#define B begin()
+#define E end()
+typedef long long ll;
+typedef unsigned long long ull;
+typedef long double lld;
+#define F first
+#define S second
+#define v1 vector<ll>
+#define int ll
+#define loop(i,a,b)     for(int i=(a);i<=(b);i++)
+#define loopr(i,a,b)     for(int i=(a);i>=(b);i--)
+#define setbits(x) __builtin_popcountll(x)
+#define nline cout << "\n"
+#define sp " "
+#define range(a,b) substr(a,b-a+1)
+#define pii pair<int,int>
+#define vi vector<int>
+#ifdef Abhishek
+#define deb(x...) cerr << "[" << #x << "] = ["; __print(x)
+#define deba2(dp,n,m) for(int i=0;i<=n;i++){for(int j=0;j<=m;j++)cerr<<dp[i][j]<<" ";cerr<<"\n";}
+#else
+#define deb(x...)
+#define deba2(dp,n,m)
+#endif
+#define inf 1000000000000000000 //1e18
+#define INF 1000000000 //1e9
+const double delta = 0.0000000001;
+const double pi = 3.1415926535;
+ll MOD = 1000000007;
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+// 1) x & (x - 1):sets the last one bit of x to zero
+// power of two exactly when x & (x − 1) = 0.
+// 2)x & -x:sets all the one bits to zero, except last one bit
+// 3)x | (x - 1):inverts all the bits after the last one bit
+//clear adj and visited vector declared globally after each test case
+//Mod wale question mein last mein if dalo ie. ans<0 then ans+=mod;
+//Incase of close mle change language to c++17 or c++14
+void _print(int t) {cerr << t;}
+void _print(string t) {cerr << t;}
+void _print(char t) {cerr << t;}
+void _print(lld t) {cerr << t;}
+void _print(double t) {cerr << t;}
+void _print(ull t) {cerr << t;}
+template <class T, class V> void _print(pair <T, V> p);
+template <class T> void _print(vector <T> v);
+template <class T> void _print(set <T> v);
+template <class T, class V> void _print(map <T, V> v);
+template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}";}
+template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
+void __print() {cerr << "]\n";}
+template <typename T, typename... V> void __print(T t, V... v) {_print(t); if (sizeof...(v)) cerr << ", "; __print(v...);}
+//*****************************************
+ll expo(ll a, ll b, ll mod) {ll res = 1; while (b > 0) {if (b & 1)res = (res * a) % mod; a = (a * a) % mod; b = b >> 1;} return res;}
+ll gcd(ll a, ll b) { if (b == 0) return a; return gcd(b, a % b);}
+ll lcm(ll a, ll b) { ll x = gcd(a, b); ll ans = (a * b) / x; return ans; }
+int extendedGCD(int a, int b, int &x, int &y) {if (b == 0) {x = 1; y = 0; return a;} int x1, y1; int d = extendedGCD(b, a % b, x1, y1); x = y1; y = x1 - (a / b) * y1; return d;}
+void swap(ll &x, ll &y) {ll temp = x; x = y; y = temp;}
+ll modInverse(ll n, ll t) { return expo(n, t - 2, t);}
+void factors(ll n) {v1 factor; for (ll i = 1; i * i <= n; i++) if (n % i == 0) { if (n / i == i) factor.pb(i); else {factor.pb(i); factor.pb(n / i);}}}
+ll mod_sub(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a - b) % m) + m) % m;}
+ull nCrModPFermat(ll n, ll r) {if (n < r) return 0; if (r == 0) return 1; vector<ull> fac(n + 1); fac[0] = 1; for (ll i = 1; i <= n; i++) fac[i] = (fac[i - 1] * i) % MOD; return (fac[n] * modInverse(fac[r], MOD) % MOD * modInverse(fac[n - r], MOD) % MOD) % MOD;}
+//**********************************************************CODE STARTS **************************************************************
+//cache friendly
+int N = 1000;
+int M = 10;
+int t[11][11][1001][1001];
+int a[1001][1001];
+int lg[1001];
+
+struct st {
+    int n, m;
+
+    st(int _n, int _m) {
+        n = _n;
+        m = _m;
+        for (int i = 2; i < N; i++) {
+            lg[i] = lg[i / 2] + 1;
+        }
+    }
+
+    f(int p, int q, int r = 0, int s = 0) {
+        return max({p, q, r, s});
+    }
+
+    void build() {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                t[0][0][i][j] = a[i][j];
+            }
+        }
+
+        for (int k = 1; k <= M; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if (i + (1 << (k - 1)) - 1 < n) {
+                        t[k][0][i][j] = f(t[k - 1][0][i][j] , t[k - 1][0][i + (1 << k - 1)][j]);
+                    }
+                }
+            }
+        }
+
+        for (int k = 1; k <= M; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if (j + (1 << (k - 1)) - 1 < m) {
+                        t[0][k][i][j] = f(t[0][k - 1][i][j] , t[0][k - 1][i][j + (1 << k - 1)]);
+                    }
+                }
+            }
+        }
+
+        for (int x = 1; x <= M; x++) {
+            for (int y = 1; y <= M; y++) {
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < m; j++) {
+                        if (i + (1 << (x - 1)) - 1 < n && j + (1 << (y - 1)) - 1 < m) {
+                            t[x][y][i][j] = f(t[x - 1][y - 1][i][j],
+                                              t[j][x - 1][y - 1][i + (1 << (x - 1))],
+                                              t[x - 1][y - 1][i][j + (1 << y - 1)],
+                                              t[x - 1][y - 1][i + (1 << (x - 1))][j + (1 << (y - 1))]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    int qry_i(int x, int y, int p, int q) {
+
+        if (p < x or q < y) return 0;
+
+        int lg1 = lg[p - x + 1];
+        int lg2 = lg[q - y + 1];
+        return f(
+                   t[lg1][lg2][x][y],
+                   t[lg1][lg2][p - (1 << lg1) + 1][y],
+                   t[lg1][lg2][x][q - (1 << lg2) + 1],
+                   t[lg1][lg2][p - (1 << lg1) + 1][q - (1 << lg2) + 1]
+               );
+    }
+};
+
+//cache unfriendly
+// int N = 1000;
+// int M = 10;
+// int t[1001][1001][11][11];
+// int a[1001][1001];
+// int lg[1001];
+
+// struct st {
+//  int n, m;
+
+//  st(int _n, int _m) {
+//      n = _n;
+//      m = _m;
+//      for (int i = 2; i < N; i++) {
+//          lg[i] = lg[i / 2] + 1;
+//      }
+//  }
+
+//  f(int p, int q, int r = 0, int s = 0) {
+//      return max({p, q, r, s});
+//  }
+
+//  void build() {
+//      for (int i = 0; i < n; i++) {
+//          for (int j = 0; j < m; j++) {
+//              t[i][j][0][0] = a[i][j];
+//          }
+//      }
+
+//      for (int k = 1; k <= M; k++) {
+//          for (int i = 0; i < n; i++) {
+//              for (int j = 0; j < m; j++) {
+//                  if (i + (1 << (k - 1)) - 1 < n) {
+//                      t[i][j][k][0] = f(t[i][j][k - 1][0] , t[i + (1 << k - 1)][j][k - 1][0]);
+//                  }
+//              }
+//          }
+//      }
+
+//      for (int k = 1; k <= M; k++) {
+//          for (int i = 0; i < n; i++) {
+//              for (int j = 0; j < m; j++) {
+//                  if (j + (1 << (k - 1)) - 1 < m) {
+//                      t[i][j][0][k] = f(t[i][j][0][k - 1] , t[i][j + (1 << k - 1)][0][k - 1]);
+//                  }
+//              }
+//          }
+//      }
+
+//      for (int x = 1; x <= M; x++) {
+//          for (int y = 1; y <= M; y++) {
+//              for (int i = 0; i < n; i++) {
+//                  for (int j = 0; j < m; j++) {
+//                      if (i + (1 << (x - 1)) - 1 < n && j + (1 << (y - 1)) - 1 < m) {
+//                          t[i][j][x][y] = f(t[i][j][x - 1][y - 1],
+//                                            t[i + (1 << (x - 1))][j][x - 1][y - 1],
+//                                            t[i][j + (1 << y - 1)][x - 1][y - 1],
+//                                            t[i + (1 << (x - 1))][j + (1 << (y - 1))][x - 1][y - 1]);
+//                      }
+//                  }
+//              }
+//          }
+//      }
+//  }
+
+//  int qry_i(int x, int y, int p, int q) {
+
+//      if (p < x or q < y) return 0;
+
+//      int lg1 = lg[p - x + 1];
+//      int lg2 = lg[q - y + 1];
+//      return f(
+//                 t[x][y][lg1][lg2],
+//                 t[p - (1 << lg1) + 1][y][lg1][lg2],
+//                 t[x][q - (1 << lg2) + 1][lg1][lg2],
+//                 t[p - (1 << lg1) + 1][q - (1 << lg2) + 1][lg1][lg2]
+//             );
+//  }
+// };
+
+void solve()
+{
+    int n, m;
+    cin >> n >> m;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> a[i][j];
+        }
+    }
+    st s(n, m);
+    s.build();
+    int q;
+    cin >> q;
+    while (q--) {
+        int z, b, f, g;
+        cin >> z >> b >> f >> g;
+        z--; b--; f--; g--;
+        cout << s.qry_i(z, b, f, g) << nl;
+    }
+}
+
+
+signed main() {
+#ifdef Abhishek
+    freopen("Error.txt", "w", stderr);
+#endif
+    fastio();
+    int t = 1;
+    // cin >> t;
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
+
+ 
+]]></content>
+  <tabTrigger>sparse_table</tabTrigger>
+  <description>2d</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>

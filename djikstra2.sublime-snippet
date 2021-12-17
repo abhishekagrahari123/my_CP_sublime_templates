@@ -1,0 +1,36 @@
+<snippet>
+  <content><![CDATA[
+void solve()
+{
+    int n, m;
+    cin >> n >> m;
+    vector<pair<int, int>> g[n];
+    for (int i = 0; i < m; i++) {
+        int a, b, w;
+        cin >> a >> b >> w;
+        a--; b--;
+        g[a].push_back({b, w});  //g[node] store {node, edge_weight}
+    }
+    int d[n];
+    for (int i = 0; i < n; i++) d[i] = inf;
+    d[0] = 0;
+    set<pair<int, int>> s;  //blue nodes it store {dist, node}
+    s.insert({0, 0});
+    while (!s.empty()) {
+        int node = s.begin()->second;
+        s.erase(s.begin());
+        for (auto &c : g[node]) {
+            if (d[c.first] > d[node] + c.second) {
+                s.erase({d[c.first], c.first});
+                d[c.first] = d[node] + c.second;
+                s.insert({d[c.first], c.first});
+            }
+        }
+    }
+}
+]]></content>
+  <tabTrigger>djikstra2</tabTrigger>
+  <description>with set</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>
