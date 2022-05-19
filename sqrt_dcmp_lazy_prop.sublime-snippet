@@ -1,0 +1,145 @@
+<snippet>
+  <content><![CDATA[
+//This allows you to do range add, range set, range sum.
+struct sd {
+	int n, bcnt, bsz;
+	vi bl, br, bval, a, lazy, type, bno;
+
+	sd(int _n, vi& _a) {
+		n = _n;
+		bsz = sqrt(n);
+		bcnt = (n + bsz - 1) / bsz;
+		a = _a;
+
+		bno.resize(n, 0);
+		bl.resize(bcnt, -1);
+		br.resize(bcnt, -1);
+		bval.resize(bcnt, 0);
+		lazy.resize(bcnt, 0);
+		type.resize(bcnt, 0);
+
+		fo(i, 0, n - 1) {
+			bno[i] = i / bsz;
+			if (bl[bno[i]] == -1) bl[bno[i]] = i;
+			br[bno[i]] = i;
+			bval[bno[i]] += a[i];
+		}
+	}
+
+	void prop(int bnum) {
+		if (type[bnum] == 0) {
+			return;
+		}
+		else if (type[bnum] == 1) {
+			// +x
+			fo(i, bl[bnum], br[bnum]) {
+				a[i] += lazy[bnum];
+				bval[bnum] += lazy[bnum];
+			}
+		}
+		else {
+			// =x
+			fo(i, bl[bnum], br[bnum]) {
+				bval[bnum] -= a[i];
+				a[i] = lazy[bnum];
+				bval[bnum] += a[i];
+			}
+		}
+		type[bnum] = 0;
+		lazy[bnum] = 0;
+	}
+
+	void upd_add(int l, int r, int x) {
+		if (bno[l] == bno[r]) {
+			prop(bno[l]);
+			fo(i, l, r) {
+				a[i] += x;
+				bval[bno[i]] += x;
+			}
+			return;
+		}
+		prop(bno[l]);
+		fo(i, l, br[bno[l]]) {
+			a[i] += x;
+			bval[bno[i]] += x;
+		}
+		fo(i, bno[l] + 1, bno[r] - 1) {
+			if (type[i] == 0) type[i] = 1;
+			lazy[i] += x;
+		}
+		prop(bno[r]);
+		fo(i, bl[bno[r]], r) {
+			a[i] += x;
+			bval[bno[i]] += x;
+		}
+	}
+
+	void upd_set(int l, int r, int x) {
+		if (bno[l] == bno[r]) {
+			int j = bno[l];
+			prop(j);
+			fo(i, l, r) {
+				bval[j] -= a[i];
+				a[i] = x;
+				bval[j] += a[i];
+			}
+			return;
+		}
+		prop(bno[l]);
+		fo(i, l, br[bno[l]]) {
+			bval[bno[i]] -= a[i];
+			a[i] = x;
+			bval[bno[i]] += a[i];
+		}
+		fo(i, bno[l] + 1, bno[r] - 1) {
+			lazy[i] = x;
+			type[i] = 2;
+		}
+		prop(bno[r]);
+		fo(i, bl[bno[r]], r) {
+			bval[bno[i]] -= a[i];
+			a[i] = x;
+			bval[bno[i]] += a[i];
+		}
+	}
+
+	int qry(int l, int r) {
+		int tot = 0;
+		if (bno[l] == bno[r]) {
+			int j = bno[l];
+			prop(j);
+			fo(i, l, r) {
+				tot += a[i];
+			}
+		}
+		else {
+			prop(bno[l]);
+			fo(i, l, br[bno[l]]) {
+				tot += a[i];
+			}
+			fo(i, bno[l] + 1, bno[r] - 1) {
+				if (type[i] == 0) {
+					tot += bval[i];
+				}
+				else if (type[i] == 1) {
+					tot += bval[i];
+					tot += lazy[i] * (br[i] - bl[i] + 1);
+				}
+				else {
+					tot += lazy[i] * (br[i] - bl[i] + 1);
+				}
+			}
+			prop(bno[r]);
+			fo(i, bl[bno[r]], r) {
+				tot += a[i];
+			}
+		}
+		return tot;
+	}
+};
+]]></content>
+  <tabTrigger>sqrtd</tabTrigger>
+  <description>Sqrt Decmp Lazy Prop</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <!-- <scope >source.python</scope > -->
+</snippet>

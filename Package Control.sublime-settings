@@ -5,12 +5,16 @@
 	],
 	"installed_packages":
 	[
+		"Anaconda",
+		"BracketHighlighter",
 		"CppFastOlympicCoding",
 		"Emmet",
 		"Formatter",
 		"HTMLBeautify",
 		"Materialize",
 		"Package Control",
+		"SideBarEnhancements",
 		"SublimeAStyleFormatter",
+		"SublimeREPL",
 	],
 }

@@ -1,0 +1,33 @@
+<snippet>
+  <content><![CDATA[
+// both array and fenwick tree are 1 based.
+// query function gives sum from a[1] to a[idx]
+// update function increases a[idx] by inc. never give idx = 0 (lead to infinite loop).
+struct FenwickTree {
+	int n;
+	//binary indexed tree
+	vector<int> bit;
+	FenwickTree (int _n) {
+		n = _n;
+		bit.resize(n + 5, 0);
+	}
+	int query(int idx) {
+		int sum = 0;
+		for (int i = idx; i >= 1; i -= i & -i)
+			sum += bit[i];
+		return sum;
+	}
+	//never give 0 in idx
+	void update(int idx, int inc) {
+		assert(1 <= idx and idx <= n);
+		for (int i = idx; i <= n; i += i & -i)
+			bit[i] += inc;
+	}
+};
+
+]]></content>
+  <tabTrigger>fenwicktree</tabTrigger>
+  <description>Fenwick Tree</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <!-- <scope >source.python</scope > -->
+</snippet>

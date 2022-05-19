@@ -59,7 +59,7 @@ int main() {
 }
 ]]></content>
   <tabTrigger>lazy</tabTrigger>
-  <description>Lazy Propagation</description>
+  <description>Seg Tree Lazy Prop</description>
   <!-- Optional: Set a scope to limit where the snippet will trigger -->
   <scope >source.c++</scope >
 </snippet>
